@@ -1,0 +1,118 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .img-list {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .img-list .img-item {
+                height: 75px;
+                padding: 5px;
+            }
+
+                .img-list .img-item:hover .img-pic {
+                    background-size: 95%;
+                    cursor: pointer;
+                    border: 2px solid #ecbaba;
+                    background-color: #ffdee8;
+                }
+
+                .img-list .img-item .img-pic {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 4px;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    border: 2px solid #bac8ec;
+                    background-color: #dee7ff;
+                }
+    </style>
+</head>
+<body>
+    <div class="img-list">
+        <h1>Изображения</h1>
+        <p id="error" class="alert alert-warning">Для работы страницы необходимо включить javascript.</p>
+        <div id="data-content" style="display: none">
+            <p class="alert alert-info">Далее отображаются изображения из диалога с пользователем <a id="user-id" href='#'>id</a>.</p>
+            <p class="text-center">
+                <button onclick="prevPage()" class="btn btn-info">&lt;</button>
+                <b class="current-page"></b>
+                <button onclick="nextPage()" class="btn btn-info">&gt;</button>
+            </p>
+            <div class="row"></div>
+            <p class="text-center">
+                <button onclick="prevPage()" class="btn btn-info">&lt;</button>
+                <b class="current-page"></b>
+                <button onclick="nextPage()" class="btn btn-info">&gt;</button>
+            </p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+        let data = [];
+        let IMG_COUNT = 144;
+        let TOTAL_PAGES;
+        let CurrentPage;
+
+        window.onload = () => {
+            CurrentPage = 0;
+            TOTAL_PAGES = Math.ceil(data.length / IMG_COUNT);
+            if (TOTAL_PAGES == 0)
+                return document.querySelector('p#error').innerText = "Изображений нет.";
+            else if (TOTAL_PAGES > 0)
+                openPage(CurrentPage);
+
+            document.querySelector('p#error').style["display"] = "none";
+            document.querySelector('div#data-content').style["display"] = "block";
+        }
+
+        let nextPage = () => {
+            if (CurrentPage >= TOTAL_PAGES - 1)
+                return;
+            openPage(++CurrentPage);
+        }
+
+        let prevPage = () => {
+            if (CurrentPage <= 0)
+                return;
+            openPage(--CurrentPage);
+        }
+
+        let openPage = (index) => {
+            let row = document.querySelector('div.img-list div.row');
+
+            // Получаем порцию данных
+            let imgs = data.slice(index * IMG_COUNT, (index + 1) * IMG_COUNT);
+
+            // Чистим сущестующие данные
+            while (row.lastChild)
+                row.removeChild(row.lastChild);
+
+            // Проходим по всем изображениям
+            imgs.forEach(p => {
+                // Тег <a>
+                let a = document.createElement('a');
+                a.setAttribute('class', 'col-1 img-item');
+                a.setAttribute('href', p.LargeImg);
+
+                // Тег <div>
+                let div = document.createElement('div');
+                div.setAttribute('class', 'img-pic');
+                div.setAttribute('style', 'background-image: url(' + p.SmallImg + ')');
+
+                a.appendChild(div);
+                row.appendChild(a);
+            });
+
+            // Обновляем номер страницы во вьюхе
+            (document.querySelectorAll('b.current-page')).forEach(p => {
+                p.innerText = "Страница " + (index + 1) + "/" + TOTAL_PAGES;
+            });
+        }
+    </script>
+</body>
+</html>
