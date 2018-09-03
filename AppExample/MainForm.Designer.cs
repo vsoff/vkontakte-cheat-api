@@ -33,7 +33,6 @@
             this.textBox_ProxyPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.textBox_Email = new System.Windows.Forms.TextBox();
             this.textBox_Pass = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,18 +42,18 @@
             this.textBox_UserId = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -103,16 +102,6 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Порт";
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(6, 109);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(262, 13);
-            this.linkLabel1.TabIndex = 7;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://hidemyna.me/ru/proxy-list/?type=h&anon=4#list";
-            // 
             // textBox_Email
             // 
             this.textBox_Email.Location = new System.Drawing.Point(65, 19);
@@ -147,7 +136,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(210, 18);
+            this.button3.Location = new System.Drawing.Point(311, 18);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(74, 22);
             this.button3.TabIndex = 14;
@@ -169,7 +158,7 @@
             // 
             this.textBox_UserId.Location = new System.Drawing.Point(104, 19);
             this.textBox_UserId.Name = "textBox_UserId";
-            this.textBox_UserId.Size = new System.Drawing.Size(100, 20);
+            this.textBox_UserId.Size = new System.Drawing.Size(201, 20);
             this.textBox_UserId.TabIndex = 16;
             // 
             // tabControl1
@@ -180,67 +169,20 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(411, 229);
+            this.tabControl1.Size = new System.Drawing.Size(411, 142);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.linkLabel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(403, 203);
+            this.tabPage1.Size = new System.Drawing.Size(403, 116);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Система";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(403, 203);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Выгрузка";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox_Email);
-            this.groupBox1.Controls.Add(this.textBox_Pass);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(221, 100);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Авторизация";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "ID пользователя";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.textBox_UserId);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(291, 48);
-            this.groupBox2.TabIndex = 18;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Выгрузка изображений из диалога";
             // 
             // groupBox3
             // 
@@ -256,9 +198,55 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Прокси";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBox_Email);
+            this.groupBox1.Controls.Add(this.textBox_Pass);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(221, 100);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Авторизация";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(403, 116);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Выгрузка";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.textBox_UserId);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(391, 48);
+            this.groupBox2.TabIndex = 18;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Выгрузка изображений из диалога";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(92, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "ID пользователя";
+            // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 229);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 142);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(411, 22);
             this.statusStrip1.TabIndex = 18;
@@ -268,21 +256,24 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 251);
+            this.ClientSize = new System.Drawing.Size(411, 164);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Главная форма";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,7 +286,6 @@
         private System.Windows.Forms.TextBox textBox_ProxyPort;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.TextBox textBox_Email;
         private System.Windows.Forms.TextBox textBox_Pass;
         private System.Windows.Forms.Label label3;
