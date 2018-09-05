@@ -42,9 +42,7 @@ namespace VkCheatApiLibrary
         public void Login(string email, string password)
         {
             // Заходим на главную страницу
-            string html = _web.DownloadString("https://m.vk.com");
-            HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
+            HtmlDocument htmlDocument = Get("https://m.vk.com");
 
             // Получаем роут для авторизации со страницы
             HtmlNode node = htmlDocument.DocumentNode.SelectSingleNode("//form");
@@ -53,19 +51,25 @@ namespace VkCheatApiLibrary
             string route = node.GetAttributeValue("action", null);
 
             // Логинимся на сайте
-            _web.Headers[HttpRequestHeader.ContentType] = POST_CONTENT_TYPE;
-            html = _web.UploadString(route, $"email={email}&pass={password}");
-            htmlDocument.LoadHtml(html);
+            htmlDocument = Post(route, new Dictionary<string, string>()
+            {
+                { "email", email },
+                { "pass", password }
+            });
 
             // Проверяем, требуют ли от нас ввести телефонный код активации
             route = htmlDocument.DocumentNode.SelectSingleNode("//form")?.GetAttributeValue("action", null);
             if (route != null && OnAuthCodeRequired != null)
-                html = _web.UploadString($"https://m.vk.com{route}", $"code={OnAuthCodeRequired()}&remember=1");
+                htmlDocument = Post($"https://m.vk.com{route}", new Dictionary<string, string>()
+                {
+                    { "code", OnAuthCodeRequired().ToString() },
+                    { "remember", "1" }
+                });
+
 
             // Проверяем, точно ли мы зашли
-            _web.Headers[HttpRequestHeader.ContentType] = null;
-            html = _web.DownloadString("https://m.vk.com");
-            htmlDocument.LoadHtml(html);
+            htmlDocument = Get("https://m.vk.com");
+
             node = htmlDocument.DocumentNode.SelectSingleNode("//li[contains(@class,'mmi_logout')]");
             if (node == null)
             {
@@ -78,15 +82,14 @@ namespace VkCheatApiLibrary
 
         public string GetApiHash(string method)
         {
+            if (!_isAuthorized)
+                throw new Exception("Не авторизован");
+
             // Загружаем старницу API
-            _web.Headers[HttpRequestHeader.ContentType] = null;
-            var resultResponse = _web.DownloadString($"https://vk.com/dev/{method}");
+            HtmlDocument htmlDocument = Get($"https://vk.com/dev/{method}");
 
             // Вытаскиваем хэш для запросов
-            var doc = new HtmlDocument();
-            doc.LoadHtml(resultResponse);
-
-            string hash = doc.DocumentNode.SelectSingleNode("//button[contains(@class,'dev_req_run_btn')]")?.GetAttributeValue("onclick", null).Split('\'')[1];
+            string hash = htmlDocument.DocumentNode.SelectSingleNode("//button[contains(@class,'dev_req_run_btn')]")?.GetAttributeValue("onclick", null).Split('\'')[1];
             if (hash == null)
                 throw new Exception("Hash not found");
 
@@ -95,6 +98,9 @@ namespace VkCheatApiLibrary
 
         public string ExecuteMethod(string method, string apiHash, Dictionary<string, string> data)
         {
+            if (!_isAuthorized)
+                throw new Exception("Не авторизован");
+
             Dictionary<string, string> bodyData = new Dictionary<string, string>();
 
             bodyData.Add("act", "a_run_method");
@@ -105,18 +111,9 @@ namespace VkCheatApiLibrary
             foreach (var d in data)
                 bodyData.Add($"param_{d.Key}", d.Value);
 
-            // Формируем POST data
-            string bodyValues = string.Join("&",
-                bodyData.Select(kvp =>
-                    string.Format("{0}={1}",
-                        WebUtility.UrlEncode(kvp.Key),
-                        WebUtility.UrlEncode(kvp.Value))
-                    )
-                );
-
             // Получаем ответ на запрос
             _web.Headers[HttpRequestHeader.ContentType] = POST_CONTENT_TYPE;
-            string json = _web.UploadString("https://vk.com/dev", bodyValues);
+            string json = _web.UploadString("https://vk.com/dev", EncodePostData(bodyData));
 
             // Отсекаем лишнюю часть ответа
             int startIndex = json.IndexOf("{\"response\":{\"items\":[");
@@ -133,6 +130,35 @@ namespace VkCheatApiLibrary
             json = json.Substring(startIndex, json.Length - startIndex);
 
             return json;
+        }
+
+        private HtmlDocument Get(string url)
+        {
+            _web.Headers[HttpRequestHeader.ContentType] = null;
+            string pageSource = _web.DownloadString(url);
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(pageSource);
+            return htmlDocument;
+        }
+
+        private HtmlDocument Post(string url, Dictionary<string, string> data)
+        {
+            _web.Headers[HttpRequestHeader.ContentType] = POST_CONTENT_TYPE;
+            string pageSource = _web.UploadString(url, EncodePostData(data));
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(pageSource);
+            return htmlDocument;
+        }
+
+        private string EncodePostData(Dictionary<string, string> data)
+        {
+            return string.Join("&",
+                data.Select(kvp =>
+                    string.Format("{0}={1}",
+                        WebUtility.UrlEncode(kvp.Key),
+                        WebUtility.UrlEncode(kvp.Value))
+                    )
+                );
         }
 
         /// <summary>
